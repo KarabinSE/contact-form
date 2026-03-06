@@ -1,8 +1,8 @@
 <?php
 
-namespace Ikoncept\FabriqContactForm\Tests;
+namespace KarabinSE\ContactForm\Tests;
 
-use Ikoncept\FabriqContactForm\FabriqContactFormServiceProvider;
+use KarabinSE\ContactForm\ContactFormServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
 
@@ -13,24 +13,19 @@ class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Ikoncept\\FabriqContactForm\\Database\\Factories\\'.class_basename($modelName).'Factory'
+            fn (string $modelName) => 'KarabinSE\\ContactForm\\Database\\Factories\\'.class_basename($modelName).'Factory'
         );
     }
 
     protected function getPackageProviders($app)
     {
         return [
-            FabriqContactFormServiceProvider::class,
+            ContactFormServiceProvider::class,
         ];
     }
 
     public function getEnvironmentSetUp($app)
     {
         config()->set('database.default', 'testing');
-
-        /*
-        $migration = include __DIR__.'/../database/migrations/create_fabriq-contact-form_table.php.stub';
-        $migration->up();
-        */
     }
 }

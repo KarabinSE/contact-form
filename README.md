@@ -4,9 +4,9 @@
 
 # Basic contact message used for public facing contact forms
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/ikoncept/fabriq-contact-form.svg?style=flat-square)](https://packagist.org/packages/ikoncept/fabriq-contact-form)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/ikoncept/fabriq-contact-form/run-tests?label=tests)](https://github.com/ikoncept/fabriq-contact-form/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/ikoncept/fabriq-contact-form.svg?style=flat-square)](https://packagist.org/packages/ikoncept/fabriq-contact-form)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/karabinse/contact-form.svg?style=flat-square)](https://packagist.org/packages/karabinse/contact-form)
+[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/karabinse/contact-form/run-tests?label=tests)](https://github.com/karabinse/contact-form/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![Total Downloads](https://img.shields.io/packagist/dt/karabinse/contact-form.svg?style=flat-square)](https://packagist.org/packages/karabinse/contact-form)
 
 This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
 
@@ -15,13 +15,13 @@ This is where your description should go. Limit it to a paragraph or two. Consid
 You can install the package via composer:
 
 ```bash
-composer require ikoncept/fabriq-contact-form
+composer require karabinse/contact-form
 ```
 
 You can publish the config file with:
 
 ```bash
-php artisan vendor:publish --tag="fabriq-contact-form-config"
+php artisan vendor:publish --tag="contact-form-config"
 ```
 
 This is the contents of the published config file:
@@ -39,11 +39,11 @@ return [
 
     'subject' => 'Nytt meddelande från hemsidan',
 
-    'mail_view' => 'fabriq-contact-form::emails.contact_plain',
+    'mail_view' => 'contact-form::emails.contact_plain',
 
-    'mailable' => \Ikoncept\FabriqContactForm\Mail\ContactMessage::class,
+    'mailable' => \KarabinSE\ContactForm\Mail\ContactMessage::class,
 
-    'form_request_class' => \Ikoncept\FabriqContactForm\Http\Requests\ContactMessageRequest::class,
+    'form_request_class' => \KarabinSE\ContactForm\Http\Requests\ContactMessageRequest::class,
 
     'validation_rules' => [
         'name' => 'required|max:125',
@@ -58,7 +58,7 @@ return [
 Optionally, you can publish the views using
 
 ```bash
-php artisan vendor:publish --tag="fabriq-contact-form-views"
+php artisan vendor:publish --tag="contact-form-views"
 ```
 
 ## Testing
@@ -69,7 +69,7 @@ composer test
 
 ## Credits
 
-- [Albin N](https://github.com/ikoncept)
+- [Albin N](https://github.com/KarabinSE)
 - [All Contributors](../../contributors)
 
 ## License

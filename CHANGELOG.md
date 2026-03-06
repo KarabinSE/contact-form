@@ -1,3 +1,3 @@
 # Changelog
 
-All notable changes to `fabriq-contact-form` will be documented in this file.
+All notable changes to `contact-form` will be documented in this file.

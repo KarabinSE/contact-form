@@ -1,6 +1,6 @@
 <?php
 
-namespace Ikoncept\FabriqContactForm\Mail;
+namespace KarabinSE\ContactForm\Mail;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
@@ -26,10 +26,10 @@ class ReceiptMessage extends Mailable
      */
     public function envelope(): Envelope
     {
-        $appNameString = config('fabriq-contact-form.include_app_name') ? '- '.config('app.name') : '';
+        $appNameString = config('contact-form.include_app_name') ? '- '.config('app.name') : '';
 
         return new Envelope(
-            subject: config('fabriq-contact-form.receipt_subject').$appNameString,
+            subject: config('contact-form.receipt_subject').$appNameString,
         );
     }
 
@@ -39,7 +39,7 @@ class ReceiptMessage extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: config('fabriq-contact-form.receipt_mail_markdown_view'),
+            markdown: config('contact-form.receipt_mail_markdown_view'),
             with: $this->contactData,
         );
     }

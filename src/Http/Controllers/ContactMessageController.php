@@ -1,8 +1,8 @@
 <?php
 
-namespace Ikoncept\FabriqContactForm\Http\Controllers;
+namespace KarabinSE\ContactForm\Http\Controllers;
 
-use Ikoncept\FabriqContactForm\Jobs\SendContactMessage;
+use KarabinSE\ContactForm\Jobs\SendContactMessage;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -11,11 +11,11 @@ class ContactMessageController extends Controller
 {
     public function __invoke(Request $request): JsonResponse
     {
-        $attributes = $request->validate(config('fabriq-contact-form.validation_rules'));
+        $attributes = $request->validate(config('contact-form.validation_rules'));
         SendContactMessage::dispatch(
             $attributes,
-            config('fabriq-contact-form.recipients'),
-            config('fabriq-contact-form.bcc_recipients')
+            config('contact-form.recipients'),
+            config('contact-form.bcc_recipients')
         );
 
         return response()->json([

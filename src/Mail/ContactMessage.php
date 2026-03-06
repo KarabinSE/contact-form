@@ -1,6 +1,6 @@
 <?php
 
-namespace Ikoncept\FabriqContactForm\Mail;
+namespace KarabinSE\ContactForm\Mail;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
@@ -35,7 +35,7 @@ class ContactMessage extends Mailable
 
         return $this
             ->replyTo($this->contactData['email'])
-            ->subject((config('fabriq-contact-form.include_app_name') ? config('app.name') . ' - ' : '') . config('fabriq-contact-form.subject') . ' - #' . $random)
-            ->text(config('fabriq-contact-form.mail_view'));
+            ->subject((config('contact-form.include_app_name') ? config('app.name') . ' - ' : '') . config('contact-form.subject') . ' - #' . $random)
+            ->text(config('contact-form.mail_view'));
     }
 }

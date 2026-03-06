@@ -1,12 +1,12 @@
 {
-    "name": "ikoncept/fabriq-contact-form",
+    "name": "karabinse/contact-form",
     "description": "Basic contact message used for public facing contact forms",
     "keywords": [
-        "ikoncept",
+        "karabinse",
         "laravel",
-        "fabriq-contact-form"
+        "contact-form"
     ],
-    "homepage": "https://github.com/ikoncept/fabriq-contact-form",
+    "homepage": "https://github.com/KarabinSE/contact-form",
     "license": "MIT",
     "authors": [
         {
@@ -28,13 +28,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Ikoncept\\FabriqContactForm\\": "src",
-            "Ikoncept\\FabriqContactForm\\Database\\Factories\\": "database/factories"
+            "KarabinSE\\ContactForm\\": "src",
+            "KarabinSE\\ContactForm\\Database\\Factories\\": "database/factories"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Ikoncept\\FabriqContactForm\\Tests\\": "tests"
+            "KarabinSE\\ContactForm\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -53,10 +53,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Ikoncept\\FabriqContactForm\\FabriqContactFormServiceProvider"
+                "KarabinSE\\ContactForm\\ContactFormServiceProvider"
             ],
             "aliases": {
-                "FabriqContactForm": "Ikoncept\\FabriqContactForm\\Facades\\FabriqContactForm"
+                "ContactForm": "KarabinSE\\ContactForm\\Facades\\ContactForm"
             }
         }
     },

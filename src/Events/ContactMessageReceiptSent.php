@@ -1,6 +1,6 @@
 <?php
 
-namespace Ikoncept\FabriqContactForm\Events;
+namespace KarabinSE\ContactForm\Events;
 
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Events\Dispatchable;

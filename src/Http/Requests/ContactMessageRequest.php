@@ -1,6 +1,6 @@
 <?php
 
-namespace Ikoncept\FabriqContactForm\Http\Requests;
+namespace KarabinSE\ContactForm\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -23,6 +23,6 @@ class ContactMessageRequest extends FormRequest
      */
     public function rules()
     {
-        return config('fabriq-contact-form.rules');
+        return config('contact-form.rules');
     }
 }

@@ -1,9 +1,9 @@
 <?php
 
-namespace Ikoncept\FabriqContactForm\Jobs;
+namespace KarabinSE\ContactForm\Jobs;
 
-use Ikoncept\FabriqContactForm\Events\ContactMessageReceiptSent;
-use Ikoncept\FabriqContactForm\Events\ContactMessageSent;
+use KarabinSE\ContactForm\Events\ContactMessageReceiptSent;
+use KarabinSE\ContactForm\Events\ContactMessageSent;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -58,7 +58,7 @@ class SendContactMessage implements ShouldQueue
      */
     public function handle()
     {
-        $mailable = config('fabriq-contact-form.mailable');
+        $mailable = config('contact-form.mailable');
 
         Mail::to($this->recipients)
             ->bcc($this->bccRecipients)
@@ -66,8 +66,8 @@ class SendContactMessage implements ShouldQueue
 
         ContactMessageSent::dispatch($this->attributes);
 
-        if (config('fabriq-contact-form.send_receipt')) {
-            $receiptMailable = config('fabriq-contact-form.receipt_mailable');
+        if (config('contact-form.send_receipt')) {
+            $receiptMailable = config('contact-form.receipt_mailable');
 
             Mail::to($this->attributes['email'])
                 ->send(new $receiptMailable($this->attributes));

@@ -1,11 +1,11 @@
 <?php
 
-namespace Ikoncept\FabriqContactForm;
+namespace KarabinSE\ContactForm;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-class FabriqContactFormServiceProvider extends PackageServiceProvider
+class ContactFormServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {
@@ -15,7 +15,7 @@ class FabriqContactFormServiceProvider extends PackageServiceProvider
          * More info: https://github.com/spatie/laravel-package-tools
          */
         $package
-            ->name('fabriq-contact-form')
+            ->name('contact-form')
             ->hasConfigFile()
             ->hasViews()
             ->hasRoute('api');

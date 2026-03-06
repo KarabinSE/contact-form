@@ -2,10 +2,10 @@
 
 namespace Tests\Feature;
 
-use Ikoncept\FabriqContactForm\Events\ContactMessageReceiptSent;
-use Ikoncept\FabriqContactForm\Events\ContactMessageSent;
-use Ikoncept\FabriqContactForm\Jobs\SendContactMessage;
-use Ikoncept\FabriqContactForm\Tests\TestCase;
+use KarabinSE\ContactForm\Events\ContactMessageReceiptSent;
+use KarabinSE\ContactForm\Events\ContactMessageSent;
+use KarabinSE\ContactForm\Jobs\SendContactMessage;
+use KarabinSE\ContactForm\Tests\TestCase;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Mail;
@@ -17,7 +17,7 @@ class ContactFormFeatureTest extends TestCase
         // Arrange
         Mail::fake();
         Event::fake();
-        Config::set('fabriq-contact-form.send_receipt', true);
+        Config::set('contact-form.send_receipt', true);
         $data = [
             'name' => 'Albin Nilsson',
             'email' => 'albin@karabin.se',
@@ -27,12 +27,12 @@ class ContactFormFeatureTest extends TestCase
         // Act
         SendContactMessage::dispatchSync(
             $data,
-            config('fabriq-contact-form.recipients'),
-            config('fabriq-contact-form.bcc_recipients')
+            config('contact-form.recipients'),
+            config('contact-form.bcc_recipients')
         );
 
         // Assert
-        Mail::assertSent(config('fabriq-contact-form.receipt_mailable'));
+        Mail::assertSent(config('contact-form.receipt_mailable'));
         Event::assertDispatched(ContactMessageSent::class);
         Event::assertDispatched(ContactMessageReceiptSent::class);
     }
