@@ -24,6 +24,12 @@ You can publish the config file with:
 php artisan vendor:publish --tag="contact-form-config"
 ```
 
+Publish the migration files with:
+
+```bash
+php artisan vendor:publish --tag="contact-form-migrations"
+```
+
 This is the contents of the published config file:
 
 ```php

@@ -18,6 +18,7 @@ class ContactFormServiceProvider extends PackageServiceProvider
             ->name('contact-form')
             ->hasConfigFile()
             ->hasViews()
-            ->hasRoute('api');
+            ->hasRoute('api')
+            ->hasMigrations('create_contact_form_submissions_table');
     }
 }

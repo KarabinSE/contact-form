@@ -12,7 +12,6 @@ return [
 
     'subject' => 'Nytt meddelande från hemsidan',
 
-    'mail_view' => 'contact-form::emails.contact_plain',
     'mailable' => \KarabinSE\ContactForm\Mail\ContactMessage::class,
     'mail_view' => 'contact-form::emails.contact_plain',
 
@@ -29,4 +28,7 @@ return [
         'phone' => 'max:30',
         'message' => 'required|max:3000',
     ],
+
+    'log_to_database' => false,
+    'database_table' => 'contact_form_submissions',
 ];
