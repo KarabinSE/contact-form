@@ -2,14 +2,15 @@
 
 namespace KarabinSE\ContactForm\Jobs;
 
-use KarabinSE\ContactForm\Events\ContactMessageReceiptSent;
-use KarabinSE\ContactForm\Events\ContactMessageSent;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
+use KarabinSE\ContactForm\Events\ContactMessageReceiptSent;
+use KarabinSE\ContactForm\Events\ContactMessageSent;
+use KarabinSE\ContactForm\Models\ContactFormSubmission;
 
 class SendContactMessage implements ShouldQueue
 {
@@ -19,37 +20,16 @@ class SendContactMessage implements ShouldQueue
     use SerializesModels;
 
     /**
-     * Sent data
-     *
-     * @var array
-     */
-    public $attributes;
-
-    /**
-     * Recipients
-     *
-     * @var array
-     */
-    public $recipients;
-
-    /**
-     * BCC recipients
-     *
-     * @var array
-     */
-    public $bccRecipients;
-
-    /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(array $attributes, array $recipients, array $bccRecipients = [])
-    {
-        $this->attributes = $attributes;
-        $this->recipients = $recipients;
-        $this->bccRecipients = $bccRecipients;
-    }
+    public function __construct(
+        public array $attributes,
+        public array $recipients,
+        public array $bccRecipients = [],
+        public string $userAgent = '',
+    ) {}
 
     /**
      * Execute the job.
@@ -59,6 +39,17 @@ class SendContactMessage implements ShouldQueue
     public function handle()
     {
         $mailable = config('contact-form.mailable');
+
+        if (config('contact-form.log_to_database')) {
+            ContactFormSubmission::create([
+                'data' => [
+                    'form' => $this->attributes,
+                    'meta' => [
+                        'user_agent' => $this->userAgent ?? 'N/A',
+                    ],
+                ],
+            ]);
+        }
 
         Mail::to($this->recipients)
             ->bcc($this->bccRecipients)
