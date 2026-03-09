@@ -75,7 +75,7 @@ class SendContactMessage implements ShouldQueue
         if (config('contact-form.log_driver') === 'database') {
             $submissionData->save();
         } else {
-            $submissionData->logToFile($submissionData);
+            $submissionData->logToFile();
         }
     }
 }
