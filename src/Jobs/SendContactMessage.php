@@ -8,7 +8,6 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Storage;
 use KarabinSE\ContactForm\Events\ContactMessageReceiptSent;
 use KarabinSE\ContactForm\Events\ContactMessageSent;
 use KarabinSE\ContactForm\Models\ContactFormSubmission;
@@ -76,7 +75,7 @@ class SendContactMessage implements ShouldQueue
         if (config('contact-form.log_driver') === 'database') {
             $submissionData->save();
         } else {
-            Storage::put(config('contact-form.log_file_location').'/'.$submissionData->filename, $submissionData->toJson());
+            $submissionData->logToFile($submissionData);
         }
     }
 }
