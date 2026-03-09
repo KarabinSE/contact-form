@@ -31,6 +31,6 @@ return [
 
     'log_submissions' => true,
     'log_driver' => 'file', // Valid options are "file" and "database"
-    'log_file_location' => 'contact-form-submissions', // Valid options are "file" and "database"
+    'log_file_location' => 'contact-form-submissions',
     'database_table' => 'contact_form_submissions',
 ];
