@@ -29,6 +29,8 @@ return [
         'message' => 'required|max:3000',
     ],
 
-    'log_to_database' => false,
+    'log_submissions' => true,
+    'log_driver' => 'file', // Valid options are "file" and "database"
+    'log_file_location' => 'contact-form-submissions', // Valid options are "file" and "database"
     'database_table' => 'contact_form_submissions',
 ];

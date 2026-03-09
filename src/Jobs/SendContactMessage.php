@@ -8,6 +8,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use KarabinSE\ContactForm\Events\ContactMessageReceiptSent;
 use KarabinSE\ContactForm\Events\ContactMessageSent;
 use KarabinSE\ContactForm\Models\ContactFormSubmission;
@@ -39,16 +40,9 @@ class SendContactMessage implements ShouldQueue
     public function handle()
     {
         $mailable = config('contact-form.mailable');
-
-        if (config('contact-form.log_to_database')) {
-            ContactFormSubmission::create([
-                'data' => [
-                    'form' => $this->attributes,
-                    'meta' => [
-                        'user_agent' => $this->userAgent ?? 'N/A',
-                    ],
-                ],
-            ]);
+        /** @var class-string<\Illuminate\Mail\Mailable> $mailable */
+        if (config('contact-form.log_submissions')) {
+            $this->logContactFormSubmission();
         }
 
         Mail::to($this->recipients)
@@ -58,6 +52,7 @@ class SendContactMessage implements ShouldQueue
         ContactMessageSent::dispatch($this->attributes);
 
         if (config('contact-form.send_receipt')) {
+            /** @var class-string<\Illuminate\Mail\Mailable> $receiptMailable */
             $receiptMailable = config('contact-form.receipt_mailable');
 
             Mail::to($this->attributes['email'])
@@ -66,5 +61,22 @@ class SendContactMessage implements ShouldQueue
             ContactMessageReceiptSent::dispatch($this->attributes);
         }
 
+    }
+
+    protected function logContactFormSubmission()
+    {
+        $submissionData = ContactFormSubmission::make([
+            'data' => [
+                'form' => $this->attributes,
+                'meta' => [
+                    'user_agent' => $this->userAgent ?? 'N/A',
+                ],
+            ],
+        ]);
+        if (config('contact-form.log_driver') === 'database') {
+            $submissionData->save();
+        } else {
+            Storage::put(config('contact-form.log_file_location').'/'.$submissionData->filename, $submissionData->toJson());
+        }
     }
 }

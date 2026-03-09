@@ -14,9 +14,10 @@ class ContactMessageController extends Controller
         $attributes = $request->validate(config('contact-form.validation_rules'));
 
         SendContactMessage::dispatch(
-            $attributes,
-            config('contact-form.recipients'),
-            config('contact-form.bcc_recipients')
+            attributes: $attributes,
+            recipients: config('contact-form.recipients'),
+            bccRecipients: config('contact-form.bcc_recipients'),
+            userAgent: $request->userAgent(),
         );
 
         return response()->json([

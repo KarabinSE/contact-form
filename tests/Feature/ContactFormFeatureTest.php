@@ -2,15 +2,16 @@
 
 namespace Tests\Feature;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use KarabinSE\ContactForm\Events\ContactMessageReceiptSent;
 use KarabinSE\ContactForm\Events\ContactMessageSent;
 use KarabinSE\ContactForm\Jobs\SendContactMessage;
 use KarabinSE\ContactForm\Models\ContactFormSubmission;
 use KarabinSE\ContactForm\Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Mail;
 
 class ContactFormFeatureTest extends TestCase
 {
@@ -44,7 +45,8 @@ class ContactFormFeatureTest extends TestCase
     public function test_it_logs_submission_to_database_when_enabled()
     {
         Mail::fake();
-        Config::set('contact-form.log_to_database', true);
+        Config::set('contact-form.log_submissions', true);
+        Config::set('contact-form.log_driver', 'database');
 
         $this->postJson('/api/contact-message', [
             'name' => 'Albin Nilsson',
@@ -60,7 +62,7 @@ class ContactFormFeatureTest extends TestCase
     public function test_it_does_not_log_submission_to_database_when_disabled()
     {
         Mail::fake();
-        Config::set('contact-form.log_to_database', false);
+        Config::set('contact-form.log_submissions', false);
 
         $this->postJson('/api/contact-message', [
             'name' => 'Albin Nilsson',
@@ -69,5 +71,19 @@ class ContactFormFeatureTest extends TestCase
         ]);
 
         $this->assertDatabaseCount('contact_form_submissions', 0);
+    }
+
+    public function test_it_logs_submission_to_file_when_log_driver_is_set_to_file()
+    {
+        Mail::fake();
+        Config::set('contact-form.log_submissions', true);
+
+        $this->postJson('/api/contact-message', [
+            'name' => 'Albin Nilsson',
+            'email' => 'albin@karabin.se',
+            'message' => 'Test message for DB logging',
+        ]);
+
+        Storage::assertExists(config('contact-form.log_file_location').'/'.now()->unix().'-916e2d45.json');
     }
 }
