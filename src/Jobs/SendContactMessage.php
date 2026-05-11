@@ -50,7 +50,7 @@ class SendContactMessage implements ShouldQueue
 
         ContactMessageSent::dispatch($this->attributes);
 
-        if (config('contact-form.send_receipt')) {
+        if (config('contact-form.send_receipt') && isset($this->attributes['email'])) {
             /** @var class-string<\Illuminate\Mail\Mailable> $receiptMailable */
             $receiptMailable = config('contact-form.receipt_mailable');
 
